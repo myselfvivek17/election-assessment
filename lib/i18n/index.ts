@@ -1,5 +1,17 @@
 export type Language = 'en' | 'hi' | 'te' | 'ta' | 'bn' | 'mr';
 
+export type Dictionary = {
+  welcome: string;
+  askMe: string;
+  listening: string;
+  tapToSpeak: string;
+  registration: string;
+  findBooth: string;
+  candidates: string;
+  pollDay: string;
+  errorSpeech: string;
+};
+
 export const languages: Record<Language, string> = {
   en: 'English',
   hi: 'हिन्दी',
@@ -9,7 +21,7 @@ export const languages: Record<Language, string> = {
   mr: 'मराठी',
 };
 
-export const dictionaries = {
+export const dictionaries: Record<Language, Partial<Dictionary>> = {
   en: {
     welcome: 'Welcome to Election Sathi',
     askMe: 'Ask me about the election process...',
@@ -36,6 +48,6 @@ export const dictionaries = {
   te: {}, ta: {}, bn: {}, mr: {},
 };
 
-export function getDictionary(lang: Language) {
-  return dictionaries[lang] || dictionaries.en;
+export function getDictionary(lang: Language): Dictionary {
+  return { ...dictionaries.en, ...(dictionaries[lang] || {}) } as Dictionary;
 }

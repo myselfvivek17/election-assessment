@@ -4,12 +4,15 @@ import { useState, useEffect, useRef } from "react";
 import { getDictionary, Language } from "@/lib/i18n";
 import { getSpeechService } from "@/lib/channels/speech";
 import { generateChatResponse } from "@/lib/ai/gemini";
+import Link from "next/link";
 import { Mic, MicOff, Send, Volume2, VolumeX, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [lang, setLang] = useState<Language>("hi");
-  const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<{ role: string; text: string }[]>(() => [
+    { role: "model", text: getDictionary("hi").welcome }
+  ]);
   const [input, setInput] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [isVoiceOutputEnabled, setIsVoiceOutputEnabled] = useState(true);
@@ -21,14 +24,14 @@ export default function Home() {
 
   useEffect(() => {
     speechService.setLang(lang);
-    if (messages.length === 0) {
-      setMessages([{ role: "model", text: dict.welcome }]);
-      if (isVoiceOutputEnabled) {
-        // give it a tiny delay for voice synthesis to be ready on load
-        setTimeout(() => speechService.speak(dict.welcome, lang), 500);
+    // If the only message is the welcome message, translate it when language changes
+    setMessages(prev => {
+      if (prev.length === 1 && prev[0].role === 'model') {
+        return [{ role: 'model', text: dict.welcome }];
       }
-    }
-  }, [lang]);
+      return prev;
+    });
+  }, [lang, speechService, dict.welcome]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -113,6 +116,14 @@ export default function Home() {
         )}
         <div ref={chatEndRef} />
       </main>
+
+      <div className="px-4 py-3 border-t bg-background flex gap-2 overflow-x-auto hide-scrollbar">
+        <Link href="/register"><Button variant="secondary" size="sm" className="rounded-full whitespace-nowrap shadow-sm font-bold text-foreground hover:bg-secondary/80">{dict.registration}</Button></Link>
+        <Link href="/booth"><Button variant="secondary" size="sm" className="rounded-full whitespace-nowrap shadow-sm font-bold text-foreground hover:bg-secondary/80">{dict.findBooth}</Button></Link>
+        <Link href="/candidates"><Button variant="secondary" size="sm" className="rounded-full whitespace-nowrap shadow-sm font-bold text-foreground hover:bg-secondary/80">{dict.candidates}</Button></Link>
+        <Link href="/poll-day"><Button variant="secondary" size="sm" className="rounded-full whitespace-nowrap shadow-sm font-bold text-foreground hover:bg-secondary/80">{dict.pollDay}</Button></Link>
+        <Link href="/myths"><Button variant="secondary" size="sm" className="rounded-full whitespace-nowrap shadow-sm font-bold text-foreground hover:bg-secondary/80">Myth Buster</Button></Link>
+      </div>
 
       <footer className="p-4 border-t bg-background">
         <div className="flex gap-3 items-center">

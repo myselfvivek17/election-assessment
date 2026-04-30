@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1",
+    "name": "Arjun Singh",
+    "party": "Independent",
+    "constituency": "Patna Sahib",
+    "education": "Graduate",
+    "assets": "₹ 1.2 Crores",
+    "liabilities": "₹ 10 Lakhs",
+    "criminalCases": 0,
+    "sourceUrl": "https://affidavit.eci.gov.in"
+  },
+  {
+    "id": "2",
+    "name": "Meera Kumar",
+    "party": "Independent",
+    "constituency": "Patna Sahib",
+    "education": "Post Graduate",
+    "assets": "₹ 5.4 Crores",
+    "liabilities": "₹ 50 Lakhs",
+    "criminalCases": 1,
+    "sourceUrl": "https://affidavit.eci.gov.in"
+  }
+]
