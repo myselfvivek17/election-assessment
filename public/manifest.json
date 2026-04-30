@@ -1,0 +1,16 @@
+{
+  "name": "Election Sathi",
+  "short_name": "Sathi",
+  "description": "An interactive, voice-first, multilingual AI assistant for voter education in India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/globe.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
