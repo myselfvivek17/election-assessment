@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     }
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash", 
+      model: "gemini-2.5-flash", 
       systemInstruction: `You are Election Sathi, a warm, neutral, helpful neighborhood election volunteer. 
       You never name a preferred party or candidate. 
       You refuse opinions on whom to vote for.
@@ -31,8 +31,8 @@ export async function POST(req: Request) {
     const response = await result.response;
     
     return NextResponse.json({ text: response.text() });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error generating Gemini response:", error);
-    return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
+    return NextResponse.json({ error: error?.message || "Failed to generate response" }, { status: 500 });
   }
 }

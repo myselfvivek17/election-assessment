@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Election Sathi 🇮🇳
 
-## Getting Started
+An interactive, voice-first, multilingual AI assistant PWA for voter education in India. Built with Next.js 15, Gemini Flash, and Tailwind CSS.
 
-First, run the development server:
+## How to Run the App
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Environment Variables**: 
+   Ensure you have a `.env` or `.env.local` file in the root directory with your Gemini API key:
+   ```env
+   GEMINI_API_KEY="your_actual_gemini_api_key_here"
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Start the Development Server**:
+   Run the following command in your terminal:
+   ```bash
+   npm run dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Open the App**:
+   Open [http://localhost:3000](http://localhost:3000) in your browser to interact with Election Sathi.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Project Walkthrough
 
-To learn more about Next.js, take a look at the following resources:
+Here is a summary of the features we built (previously saved in the Antigravity artifact manager):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Core Features
+- **Chat Shell (`/`)**: Voice-first chat interface connected to Google's Gemini Flash model, pre-configured with a strict system prompt to ensure civic neutrality and reliable ECI citations. Integrated with Web Speech API for seamless bilingual interaction.
+- **Voter Registration (`/register`)**: Guided Form 6 walkthrough, eligibility checks, and a document checklist.
+- **Booth Finder (`/booth`)**: Search functionality paired with the crucial 12 ECI-approved photo IDs display.
+- **Know Candidates (`/candidates`)**: Detailed KYC cards highlighting criminal cases and assets.
+- **Poll Day Walkthrough (`/poll-day`)**: Interactive 9-step timeline of the voting process with "Read Aloud" capabilities.
+- **Myth Buster (`/myths`)**: Debunking critical misinformation around online voting and EVMs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Technical Achievements
+- **Scaffold & Infrastructure**: Next.js 15 App Router, TypeScript, Tailwind CSS, shadcn/ui. PWA configuration enabled via `next-pwa`.
+- **Accessibility & Design**: Adheres to Impeccable design guidelines. All animations respect OS-level `prefers-reduced-motion` settings (using `motion-safe:` prefix). Zero pure grays (OKLCH tinted neutrals).
+- **Code Health**: 100% clean `npm run lint` with zero errors. All strict React side-effect issues resolved.

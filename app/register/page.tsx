@@ -1,83 +1,122 @@
 "use client";
 
+import { useLang } from "@/lib/hooks/use-lang";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ExternalLink } from "lucide-react";
+
+const eligibilityData = {
+  en: [
+    "Indian citizen",
+    "18 years or older on the qualifying date",
+    "Ordinarily resident in the constituency",
+    "Name enrolled in the Electoral Roll",
+  ],
+  hi: [
+    "भारतीय नागरिक हों",
+    "अर्हता तिथि पर 18 वर्ष या उससे अधिक आयु के हों",
+    "निर्वाचन क्षेत्र में सामान्यतः निवासी हों",
+    "नाम मतदाता सूची में दर्ज हो",
+  ],
+};
+
+const docsData = {
+  en: [
+    { label: "Age Proof", examples: "Birth Certificate, School Certificate, Passport" },
+    { label: "Address Proof", examples: "Aadhaar, Utility Bill, Bank Passbook" },
+    { label: "Recent Passport-size Photo", examples: "Plain white background" },
+  ],
+  hi: [
+    { label: "आयु प्रमाण", examples: "जन्म प्रमाण पत्र, विद्यालय प्रमाण पत्र, पासपोर्ट" },
+    { label: "पता प्रमाण", examples: "आधार, उपयोगिता बिल, बैंक पासबुक" },
+    { label: "हालिया पासपोर्ट-साइज़ फोटो", examples: "सादी सफेद पृष्ठभूमि" },
+  ],
+};
+
+const stepsData = {
+  en: [
+    { step: 1, text: "Visit the National Voters' Service Portal", url: "https://voters.eci.gov.in" },
+    { step: 2, text: 'Select "Voter Registration" then "New Voter Registration (Form 6)".' },
+    { step: 3, text: "Fill in your personal details, address, and upload documents." },
+    { step: 4, text: "Submit and note your reference number for tracking." },
+    { step: 5, text: "A Booth Level Officer (BLO) may visit to verify your address." },
+  ],
+  hi: [
+    { step: 1, text: "राष्ट्रीय मतदाता सेवा पोर्टल पर जाएं", url: "https://voters.eci.gov.in" },
+    { step: 2, text: '"वोटर रजिस्ट्रेशन" और फिर "नया मतदाता पंजीकरण (फॉर्म 6)" चुनें।' },
+    { step: 3, text: "अपना व्यक्तिगत विवरण, पता दर्ज करें और दस्तावेज़ अपलोड करें।" },
+    { step: 4, text: "सबमिट करें और ट्रैकिंग के लिए संदर्भ संख्या नोट करें।" },
+    { step: 5, text: "एक बूथ स्तर अधिकारी (BLO) आपके पते की सत्यापन के लिए आ सकते हैं।" },
+  ],
+};
 
 export default function RegisterPage() {
+  const { lang, dict } = useLang();
+  const eligibility = eligibilityData[lang === 'hi' ? 'hi' : 'en'];
+  const docs = docsData[lang === 'hi' ? 'hi' : 'en'];
+  const steps = stepsData[lang === 'hi' ? 'hi' : 'en'];
+
   return (
     <div className="flex flex-col min-h-[100dvh] max-w-md mx-auto bg-background shadow-xl border-x">
-      <header className="flex items-center p-4 border-b bg-primary text-primary-foreground">
+      <header className="flex items-center px-4 py-5 border-b bg-gradient-to-r from-primary to-primary/85 text-primary-foreground">
         <Link href="/">
-          <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary/80 shrink-0">
+          <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/15 shrink-0">
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold ml-2">Voter Registration</h1>
+        <h1 className="text-xl font-bold ml-2 tracking-tight">{dict.registerTitle}</h1>
       </header>
-      <main className="flex-1 p-6 overflow-y-auto space-y-8 pb-12">
-        <section>
-          <h2 className="text-2xl font-bold mb-4 text-foreground">Am I eligible?</h2>
-          <ul className="space-y-3 text-muted-foreground">
-            <li className="flex items-center gap-3 bg-muted/50 p-3 rounded-lg"><CheckCircle2 className="h-6 w-6 text-green-600 shrink-0" /> Indian Citizen</li>
-            <li className="flex items-center gap-3 bg-muted/50 p-3 rounded-lg"><CheckCircle2 className="h-6 w-6 text-green-600 shrink-0" /> 18 years or older</li>
-            <li className="flex items-center gap-3 bg-muted/50 p-3 rounded-lg"><CheckCircle2 className="h-6 w-6 text-green-600 shrink-0" /> Resident of the polling area</li>
-          </ul>
-        </section>
-        
-        <section className="p-5 bg-secondary/30 border rounded-2xl">
-          <h2 className="text-xl font-bold mb-4 text-foreground">Form 6 Document Checklist</h2>
-          <div className="space-y-4">
-            <div className="bg-card p-4 rounded-xl shadow-sm border">
-              <h3 className="font-bold text-foreground">1. Age Proof (Any one)</h3>
-              <p className="text-sm text-muted-foreground mt-1">Birth Certificate, Aadhaar Card, PAN Card, Driving License, or 10th/12th Marksheet.</p>
-            </div>
-            <div className="bg-card p-4 rounded-xl shadow-sm border">
-              <h3 className="font-bold text-foreground">2. Address Proof (Any one)</h3>
-              <p className="text-sm text-muted-foreground mt-1">Water/Electricity Bill, Aadhaar Card, Passport, or Bank Passbook.</p>
-            </div>
-            <div className="bg-card p-4 rounded-xl shadow-sm border">
-              <h3 className="font-bold text-foreground">3. Passport Size Photo</h3>
-              <p className="text-sm text-muted-foreground mt-1">Recent, color photo with white background.</p>
-            </div>
+      <main className="flex-1 p-6 overflow-y-auto space-y-10 pb-12">
+
+        {/* Eligibility */}
+        <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500">
+          <h2 className="text-2xl font-bold mb-5 text-foreground">{dict.registerSubtitle}</h2>
+          <h3 className="font-semibold text-foreground mb-3 text-base">{dict.eligibilityTitle}</h3>
+          <div className="space-y-2.5">
+            {eligibility.map((item, idx) => (
+              <div key={idx} className="flex items-center gap-3 p-3.5 bg-muted/50 rounded-xl border hover:bg-muted/80 transition-colors">
+                <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0" />
+                <p className="text-sm font-medium text-foreground">{item}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-bold mb-6 text-foreground">How to apply?</h2>
-          <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-border">
-             {/* Step 1 */}
-             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-background bg-primary text-primary-foreground font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">1</div>
-                <div className="w-[calc(100%-3.5rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border shadow-sm bg-card">
-                  <h3 className="font-bold text-foreground">Download Voter Helpline App</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Available on Google Play and App Store.</p>
-                </div>
-             </div>
-             {/* Step 2 */}
-             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-background bg-primary text-primary-foreground font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">2</div>
-                <div className="w-[calc(100%-3.5rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border shadow-sm bg-card">
-                  <h3 className="font-bold text-foreground">Fill Form 6</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Select &quot;Voter Registration&quot; then &quot;New Voter Registration (Form 6)&quot;.</p>
-                </div>
-             </div>
-             {/* Step 3 */}
-             <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-background bg-primary text-primary-foreground font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">3</div>
-                <div className="w-[calc(100%-3.5rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border shadow-sm bg-card">
-                  <h3 className="font-bold text-foreground">Upload Documents</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Upload clear photos of your age and address proofs.</p>
-                </div>
-             </div>
+        {/* Documents */}
+        <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500 delay-100">
+          <h3 className="font-semibold text-foreground mb-3 text-base">{dict.docsTitle}</h3>
+          <div className="space-y-3">
+            {docs.map((doc, idx) => (
+              <div key={idx} className="p-4 bg-card border rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                <p className="font-bold text-foreground text-sm">{doc.label}</p>
+                <p className="text-xs text-muted-foreground mt-1.5">{doc.examples}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="text-center pt-4">
-           <Button className="w-full h-14 text-lg rounded-full font-bold shadow-md" onClick={() => window.open('https://voters.eci.gov.in', '_blank')}>
-             Visit ECI Portal
-           </Button>
-           <p className="text-xs text-muted-foreground mt-3">Source: <a href="https://voters.eci.gov.in" target="_blank" rel="noreferrer" className="underline hover:text-foreground">voters.eci.gov.in</a></p>
+        {/* Steps */}
+        <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500 delay-200">
+          <h3 className="font-semibold text-foreground mb-5 text-base">{dict.stepsTitle}</h3>
+          <div className="relative space-y-0">
+            {steps.map((s, idx) => (
+              <div key={idx} className="flex gap-4 group">
+                <div className="flex flex-col items-center">
+                  <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shrink-0 z-10">{s.step}</div>
+                  {idx < steps.length - 1 && <div className="w-0.5 flex-1 bg-border mt-1 mb-1 min-h-[1.5rem]" />}
+                </div>
+                <div className="pb-5 pt-1.5 flex-1">
+                  {s.url ? (
+                    <a href={s.url} target="_blank" rel="noreferrer" className="font-bold text-primary flex items-center gap-1 text-sm underline underline-offset-2">
+                      {s.text} <ExternalLink className="h-3 w-3 shrink-0" />
+                    </a>
+                  ) : (
+                    <p className="text-sm text-foreground">{s.text}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
       </main>
     </div>
