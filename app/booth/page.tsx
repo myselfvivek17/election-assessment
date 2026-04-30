@@ -43,7 +43,7 @@ export default function BoothFinderPage() {
           </div>
           
           {mockResult && (
-            <div className="mt-6 p-5 bg-primary/10 border border-primary/20 rounded-2xl flex items-start gap-3 animate-in fade-in slide-in-from-bottom-2">
+            <div className="mt-6 p-5 bg-primary/10 border border-primary/20 rounded-2xl flex items-start gap-3 motion-safe:animate-in fade-in slide-in-from-bottom-2">
               <MapPin className="h-6 w-6 text-primary shrink-0 mt-0.5" />
               <div>
                 <p className="text-sm text-muted-foreground font-bold uppercase tracking-wider">Your Polling Booth</p>

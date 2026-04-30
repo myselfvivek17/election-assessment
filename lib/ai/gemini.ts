@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function generateChatResponse(prompt: string, history: any[], language: string = "hi") {
   try {
     const response = await fetch("/api/chat", {

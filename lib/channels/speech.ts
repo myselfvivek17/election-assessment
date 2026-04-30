@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Wrapper for SpeechRecognition and SpeechSynthesis
 
 export class SpeechService {

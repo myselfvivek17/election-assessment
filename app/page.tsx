@@ -25,6 +25,7 @@ export default function Home() {
   useEffect(() => {
     speechService.setLang(lang);
     // If the only message is the welcome message, translate it when language changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMessages(prev => {
       if (prev.length === 1 && prev[0].role === 'model') {
         return [{ role: 'model', text: dict.welcome }];
@@ -101,14 +102,14 @@ export default function Home() {
 
       <main className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
         {messages.map((msg, idx) => (
-          <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
+          <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} motion-safe:animate-in fade-in slide-in-from-bottom-2 duration-300`}>
             <div className={`p-4 rounded-2xl max-w-[85%] text-base shadow-sm ${msg.role === 'user' ? 'bg-primary text-primary-foreground rounded-tr-sm' : 'bg-muted text-foreground rounded-tl-sm'}`}>
               {msg.text}
             </div>
           </div>
         ))}
         {isLoading && (
-          <div className="flex justify-start animate-in fade-in slide-in-from-bottom-2 duration-300">
+          <div className="flex justify-start motion-safe:animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="p-4 rounded-2xl bg-muted text-foreground rounded-tl-sm animate-pulse">
               ...
             </div>

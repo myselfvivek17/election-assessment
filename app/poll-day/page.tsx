@@ -54,7 +54,7 @@ export default function PollDayPage() {
           </Button>
         </div>
 
-        <div className="w-full max-w-sm bg-card border rounded-3xl p-8 shadow-lg text-center min-h-[320px] flex flex-col justify-center animate-in zoom-in-95 duration-300" key={currentStep}>
+        <div className="w-full max-w-sm bg-card border rounded-3xl p-8 shadow-lg text-center min-h-[320px] flex flex-col justify-center motion-safe:animate-in zoom-in-95 duration-300" key={currentStep}>
            <div className="w-20 h-20 mx-auto bg-primary/10 text-primary rounded-full flex items-center justify-center font-bold text-3xl mb-6">
              {step.id}
            </div>

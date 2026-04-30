@@ -59,7 +59,7 @@ export default function RegisterPage() {
                 <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-background bg-primary text-primary-foreground font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">2</div>
                 <div className="w-[calc(100%-3.5rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border shadow-sm bg-card">
                   <h3 className="font-bold text-foreground">Fill Form 6</h3>
-                  <p className="text-sm text-muted-foreground mt-1">Select "Voter Registration" then "New Voter Registration (Form 6)".</p>
+                  <p className="text-sm text-muted-foreground mt-1">Select &quot;Voter Registration&quot; then &quot;New Voter Registration (Form 6)&quot;.</p>
                 </div>
              </div>
              {/* Step 3 */}

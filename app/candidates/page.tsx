@@ -44,7 +44,7 @@ export default function CandidatesPage() {
           </div>
           
           {showResults && (
-            <div className="mt-8 space-y-6 animate-in fade-in slide-in-from-bottom-2">
+            <div className="mt-8 space-y-6 motion-safe:animate-in fade-in slide-in-from-bottom-2">
               <h3 className="text-lg font-bold text-foreground">Candidates in {search || 'Patna Sahib'}</h3>
               <div className="space-y-4">
                 {candidates.map((candidate) => (
