@@ -41,34 +41,36 @@ export default function MythsPage() {
   const myths = lang === 'hi' ? mythsData.hi : mythsData.en;
 
   return (
-    <div className="flex flex-col min-h-[100dvh] max-w-md mx-auto bg-background shadow-xl border-x">
-      <header className="flex items-center px-4 py-5 border-b bg-gradient-to-r from-primary to-primary/85 text-primary-foreground">
-        <Link href="/">
+    <div className="flex flex-col min-h-[100dvh] bg-background">
+      <header className="flex items-center px-4 md:px-8 py-5 border-b bg-gradient-to-r from-primary to-primary/85 text-primary-foreground">
+        <Link href="/" className="md:hidden">
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/15 shrink-0">
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold ml-2 tracking-tight">{dict.mythsTitle}</h1>
+        <h1 className="text-xl font-bold ml-2 md:ml-0 tracking-tight">{dict.mythsTitle}</h1>
       </header>
-      <main className="flex-1 p-6 overflow-y-auto space-y-6 pb-12">
-         {myths.map((item, idx) => (
-           <div key={idx} className="bg-card border rounded-2xl p-5 shadow-sm space-y-4 hover:shadow-md transition-shadow motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
-             <div className="bg-destructive/10 p-3.5 rounded-xl flex gap-3 items-start">
-               <FileText className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
-               <div>
-                 <p className="text-xs font-bold text-destructive uppercase tracking-wider mb-1">{dict.myth}</p>
-                 <p className="text-foreground font-bold text-sm">{item.myth}</p>
-               </div>
-             </div>
-             <div className="bg-green-600/10 p-3.5 rounded-xl flex gap-3 items-start">
-               <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
-               <div>
-                 <p className="text-xs font-bold text-green-600 uppercase tracking-wider mb-1">{dict.fact}</p>
-                 <p className="text-foreground font-medium text-sm leading-relaxed">{item.fact}</p>
-               </div>
-             </div>
-           </div>
-         ))}
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto pb-20 md:pb-12">
+        <div className="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+          {myths.map((item, idx) => (
+            <div key={idx} className="bg-card border rounded-2xl p-5 shadow-sm space-y-4 hover:shadow-md transition-shadow motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
+              <div className="bg-destructive/10 p-3.5 rounded-xl flex gap-3 items-start">
+                <FileText className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs font-bold text-destructive uppercase tracking-wider mb-1">{dict.myth}</p>
+                  <p className="text-foreground font-bold text-sm">{item.myth}</p>
+                </div>
+              </div>
+              <div className="bg-green-600/10 p-3.5 rounded-xl flex gap-3 items-start">
+                <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs font-bold text-green-600 uppercase tracking-wider mb-1">{dict.fact}</p>
+                  <p className="text-foreground font-medium text-sm leading-relaxed">{item.fact}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </main>
     </div>
   );

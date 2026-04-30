@@ -57,67 +57,68 @@ export default function RegisterPage() {
   const steps = stepsData[lang === 'hi' ? 'hi' : 'en'];
 
   return (
-    <div className="flex flex-col min-h-[100dvh] max-w-md mx-auto bg-background shadow-xl border-x">
-      <header className="flex items-center px-4 py-5 border-b bg-gradient-to-r from-primary to-primary/85 text-primary-foreground">
-        <Link href="/">
+    <div className="flex flex-col min-h-[100dvh] bg-background">
+      <header className="flex items-center px-4 md:px-8 py-5 border-b bg-gradient-to-r from-primary to-primary/85 text-primary-foreground">
+        <Link href="/" className="md:hidden">
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/15 shrink-0">
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold ml-2 tracking-tight">{dict.registerTitle}</h1>
+        <h1 className="text-xl font-bold ml-2 md:ml-0 tracking-tight">{dict.registerTitle}</h1>
       </header>
-      <main className="flex-1 p-6 overflow-y-auto space-y-10 pb-12">
-
-        {/* Eligibility */}
-        <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500">
-          <h2 className="text-2xl font-bold mb-5 text-foreground">{dict.registerSubtitle}</h2>
-          <h3 className="font-semibold text-foreground mb-3 text-base">{dict.eligibilityTitle}</h3>
-          <div className="space-y-2.5">
-            {eligibility.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-3 p-3.5 bg-muted/50 rounded-xl border hover:bg-muted/80 transition-colors">
-                <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0" />
-                <p className="text-sm font-medium text-foreground">{item}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Documents */}
-        <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500 delay-100">
-          <h3 className="font-semibold text-foreground mb-3 text-base">{dict.docsTitle}</h3>
-          <div className="space-y-3">
-            {docs.map((doc, idx) => (
-              <div key={idx} className="p-4 bg-card border rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                <p className="font-bold text-foreground text-sm">{doc.label}</p>
-                <p className="text-xs text-muted-foreground mt-1.5">{doc.examples}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Steps */}
-        <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500 delay-200">
-          <h3 className="font-semibold text-foreground mb-5 text-base">{dict.stepsTitle}</h3>
-          <div className="relative space-y-0">
-            {steps.map((s, idx) => (
-              <div key={idx} className="flex gap-4 group">
-                <div className="flex flex-col items-center">
-                  <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shrink-0 z-10">{s.step}</div>
-                  {idx < steps.length - 1 && <div className="w-0.5 flex-1 bg-border mt-1 mb-1 min-h-[1.5rem]" />}
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto pb-20 md:pb-12">
+        <div className="max-w-3xl mx-auto space-y-10">
+          {/* Eligibility */}
+          <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500">
+            <h2 className="text-2xl md:text-3xl font-bold mb-5 text-foreground">{dict.registerSubtitle}</h2>
+            <h3 className="font-semibold text-foreground mb-3 text-base">{dict.eligibilityTitle}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+              {eligibility.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3 p-3.5 bg-muted/50 rounded-xl border hover:bg-muted/80 transition-colors">
+                  <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0" />
+                  <p className="text-sm font-medium text-foreground">{item}</p>
                 </div>
-                <div className="pb-5 pt-1.5 flex-1">
-                  {s.url ? (
-                    <a href={s.url} target="_blank" rel="noreferrer" className="font-bold text-primary flex items-center gap-1 text-sm underline underline-offset-2">
-                      {s.text} <ExternalLink className="h-3 w-3 shrink-0" />
-                    </a>
-                  ) : (
-                    <p className="text-sm text-foreground">{s.text}</p>
-                  )}
+              ))}
+            </div>
+          </section>
+
+          {/* Documents */}
+          <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500 delay-100">
+            <h3 className="font-semibold text-foreground mb-3 text-base">{dict.docsTitle}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {docs.map((doc, idx) => (
+                <div key={idx} className="p-4 bg-card border rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                  <p className="font-bold text-foreground text-sm">{doc.label}</p>
+                  <p className="text-xs text-muted-foreground mt-1.5">{doc.examples}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+
+          {/* Steps */}
+          <section className="motion-safe:animate-in fade-in slide-in-from-bottom-3 duration-500 delay-200">
+            <h3 className="font-semibold text-foreground mb-5 text-base">{dict.stepsTitle}</h3>
+            <div className="relative space-y-0 max-w-lg">
+              {steps.map((s, idx) => (
+                <div key={idx} className="flex gap-4 group">
+                  <div className="flex flex-col items-center">
+                    <div className="w-9 h-9 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center shrink-0 z-10">{s.step}</div>
+                    {idx < steps.length - 1 && <div className="w-0.5 flex-1 bg-border mt-1 mb-1 min-h-[1.5rem]" />}
+                  </div>
+                  <div className="pb-5 pt-1.5 flex-1">
+                    {s.url ? (
+                      <a href={s.url} target="_blank" rel="noreferrer" className="font-bold text-primary flex items-center gap-1 text-sm underline underline-offset-2">
+                        {s.text} <ExternalLink className="h-3 w-3 shrink-0" />
+                      </a>
+                    ) : (
+                      <p className="text-sm text-foreground">{s.text}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   );

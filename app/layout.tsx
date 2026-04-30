@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans } from "next/font/google";
+import { AppShell } from "@/components/app-shell";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -28,7 +29,9 @@ export default function RootLayout({
       lang="en"
       className={`${notoSans.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body>
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }

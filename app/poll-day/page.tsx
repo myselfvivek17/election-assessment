@@ -44,19 +44,19 @@ export default function PollDayPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-[100dvh] max-w-md mx-auto bg-background shadow-xl border-x">
-      <header className="flex items-center px-4 py-5 border-b bg-gradient-to-r from-primary to-primary/85 text-primary-foreground">
-        <Link href="/">
+    <div className="flex flex-col min-h-[100dvh] bg-background">
+      <header className="flex items-center px-4 md:px-8 py-5 border-b bg-gradient-to-r from-primary to-primary/85 text-primary-foreground">
+        <Link href="/" className="md:hidden">
           <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/15 shrink-0">
             <ArrowLeft className="h-6 w-6" />
           </Button>
         </Link>
-        <h1 className="text-xl font-bold ml-2 tracking-tight">{dict.pollDayTitle}</h1>
+        <h1 className="text-xl font-bold ml-2 md:ml-0 tracking-tight">{dict.pollDayTitle}</h1>
       </header>
-      <main className="flex-1 p-6 flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-b from-background to-muted/50 pb-36">
+      <main className="flex-1 p-6 md:p-10 flex flex-col justify-center items-center relative overflow-hidden bg-gradient-to-b from-background to-muted/50 pb-36 md:pb-40">
 
         {/* Step counter + Read Aloud */}
-        <div className="absolute top-6 left-6 right-6 flex justify-between items-center text-sm font-bold text-muted-foreground">
+        <div className="absolute top-6 md:top-10 left-6 md:left-10 right-6 md:right-10 flex justify-between items-center text-sm font-bold text-muted-foreground max-w-2xl mx-auto w-full">
           <span>{dict.pollDayStep} {currentStep + 1} {dict.pollDayOf} 9</span>
           <Button variant="outline" size="sm" onClick={handleReadAloud} className="rounded-full shadow-sm text-foreground border-border hover:bg-muted transition-colors">
             <Volume2 className="h-4 w-4 mr-2"/> {dict.readAloud}
@@ -64,7 +64,7 @@ export default function PollDayPage() {
         </div>
 
         {/* Segmented progress bar */}
-        <div className="absolute top-16 left-6 right-6 flex gap-1.5">
+        <div className="absolute top-16 md:top-20 left-6 md:left-10 right-6 md:right-10 flex gap-1.5 max-w-2xl mx-auto w-full">
           {Array.from({ length: 9 }).map((_, i) => (
             <div
               key={i}
@@ -76,16 +76,16 @@ export default function PollDayPage() {
         </div>
 
         {/* Step card */}
-        <div className="w-full max-w-sm bg-card border rounded-3xl p-8 shadow-lg text-center min-h-[320px] flex flex-col justify-center motion-safe:animate-in zoom-in-95 duration-300" key={currentStep}>
+        <div className="w-full max-w-sm md:max-w-lg bg-card border rounded-3xl p-8 md:p-12 shadow-lg text-center min-h-[320px] flex flex-col justify-center motion-safe:animate-in zoom-in-95 duration-300" key={currentStep}>
            <div className="w-20 h-20 mx-auto bg-primary/10 text-primary rounded-full flex items-center justify-center font-bold text-3xl mb-6">
              {step.id}
            </div>
-           <h2 className="text-2xl font-bold text-foreground mb-4">{step.title}</h2>
-           <p className="text-muted-foreground text-lg leading-relaxed">{step.desc}</p>
+           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{step.title}</h2>
+           <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">{step.desc}</p>
         </div>
 
         {/* Navigation */}
-        <div className="absolute bottom-8 left-6 right-6 flex gap-4">
+        <div className="absolute bottom-8 md:bottom-12 left-6 md:left-10 right-6 md:right-10 flex gap-4 max-w-2xl mx-auto w-full">
            <Button variant="outline" className="flex-1 h-14 rounded-full font-bold text-base shadow-sm border-border text-foreground hover:bg-muted transition-colors" disabled={currentStep === 0} onClick={() => setCurrentStep(c => c - 1)}>
              {dict.back}
            </Button>
