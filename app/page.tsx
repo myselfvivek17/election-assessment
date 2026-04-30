@@ -98,14 +98,14 @@ export default function Home() {
 
       <main className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
         {messages.map((msg, idx) => (
-          <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-bottom-2 duration-300`}>
             <div className={`p-4 rounded-2xl max-w-[85%] text-base shadow-sm ${msg.role === 'user' ? 'bg-primary text-primary-foreground rounded-tr-sm' : 'bg-muted text-foreground rounded-tl-sm'}`}>
               {msg.text}
             </div>
           </div>
         ))}
         {isLoading && (
-          <div className="flex justify-start">
+          <div className="flex justify-start animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="p-4 rounded-2xl bg-muted text-foreground rounded-tl-sm animate-pulse">
               ...
             </div>
@@ -120,7 +120,7 @@ export default function Home() {
             variant={isListening ? "destructive" : "secondary"}
             size="icon"
             onClick={toggleListening}
-            className="rounded-full h-14 w-14 shrink-0 shadow-md"
+            className={`rounded-full h-14 w-14 shrink-0 shadow-md transition-all ${isListening ? 'animate-pulse scale-105' : 'hover:scale-105'}`}
             aria-label={dict.tapToSpeak}
           >
             {isListening ? <MicOff className="h-7 w-7" /> : <Mic className="h-7 w-7" />}
