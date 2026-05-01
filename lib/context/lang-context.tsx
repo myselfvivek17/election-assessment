@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { getDictionary, Language, Dictionary } from "@/lib/i18n";
+import { logLanguageSwitch } from "@/lib/firebase/analytics";
 
 type LangContextType = {
   lang: Language;
@@ -33,6 +34,7 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
   }, [lang]);
 
   const setLang = (l: Language) => {
+    logLanguageSwitch(lang, l);
     localStorage.setItem("es_lang", l);
     setLangState(l);
   };

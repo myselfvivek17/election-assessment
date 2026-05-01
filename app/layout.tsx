@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Noto_Sans } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
 import { LangProvider } from "@/lib/context/lang-context";
+import { AnalyticsInit } from "@/components/analytics-init";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -30,6 +31,7 @@ export default function RootLayout({
       lang="en"
     >
       <body className={`${notoSans.variable} font-sans antialiased bg-muted/30`}>
+        <AnalyticsInit />
         <LangProvider>
           <AppShell>{children}</AppShell>
         </LangProvider>
