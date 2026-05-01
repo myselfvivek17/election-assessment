@@ -13,7 +13,7 @@
  *      within the first ~300 characters — catches non-git projects.
  */
 
-import { execSync } from 'node:child_process';
+import { execSync, execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -31,6 +31,9 @@ const HEADER_MARKERS = [
  * @param {string} [options.cwd] - project root (defaults to process.cwd())
  */
 export function isGeneratedFile(filePath, options = {}) {
+  if (typeof filePath !== 'string' || filePath.length === 0) {
+    throw new TypeError('filePath must be a non-empty string');
+  }
   const cwd = options.cwd || process.cwd();
   const absPath = path.isAbsolute(filePath) ? filePath : path.resolve(cwd, filePath);
 
@@ -41,7 +44,7 @@ export function isGeneratedFile(filePath, options = {}) {
 
 function isGitIgnored(absPath, cwd) {
   try {
-    execSync(`git check-ignore --quiet ${JSON.stringify(absPath)}`, {
+    execFileSync('git', ['check-ignore', '--quiet', absPath], {
       cwd,
       stdio: 'ignore',
     });

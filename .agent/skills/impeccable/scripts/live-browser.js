@@ -2166,18 +2166,22 @@
 
   let evtSource = null;
   let sseRetries = 0;
-  const SSE_MAX_RETRIES = 20;  // generous: heartbeats keep the connection alive, so retries mean real trouble
+  let firstErrorTimestamp = 0;
+  const SSE_MAX_RETRIES = 20;
 
   function connectSSE() {
     evtSource = new EventSource('http://localhost:' + PORT + '/events?token=' + TOKEN);
 
     evtSource.onopen = () => {
-      sseRetries = 0; // reset on successful (re)connect
+      sseRetries = 0;
+      firstErrorTimestamp = 0;
     };
 
     evtSource.onmessage = (e) => {
-      sseRetries = 0; // reset on any successful message
+      sseRetries = 0;
+      firstErrorTimestamp = 0;
       let msg; try { msg = JSON.parse(e.data); } catch { return; }
+      // ... (no changes to switch)
       switch (msg.type) {
         case 'connected':
           hasProjectContext = !!msg.hasProjectContext;
@@ -2186,7 +2190,6 @@
           if (state === 'IDLE') state = 'PICKING';
           break;
         case 'done':
-          // Variants already arrived via HMR → normal transition.
           if (arrivedVariants >= expectedVariants && expectedVariants > 0) {
             if (state === 'GENERATING') {
               state = 'CYCLING';
@@ -2195,13 +2198,6 @@
             }
             break;
           }
-          // Variants are in source but not in the DOM yet. Common when the
-          // picked element lived inside conditional render (closed modal,
-          // hidden tab, a route the user navigated away from). The variant
-          // MutationObserver stays armed and auto-transitions to CYCLING
-          // the moment the wrapper actually mounts. Nudge the user toward
-          // that path with a toast — better than the prior force-reload
-          // which reset framework state and left the session stuck.
           setTimeout(() => {
             if (arrivedVariants >= expectedVariants && expectedVariants > 0) return;
             if (state !== 'GENERATING') return;
@@ -2221,16 +2217,22 @@
     };
 
     evtSource.onerror = () => {
+      if (!firstErrorTimestamp) firstErrorTimestamp = Date.now();
       sseRetries++;
-      if (sseRetries <= SSE_MAX_RETRIES) {
-        console.log('[impeccable] SSE connection lost. Retry ' + sseRetries + '/' + SSE_MAX_RETRIES + '...');
-        return; // EventSource auto-reconnects
+      const duration = Date.now() - firstErrorTimestamp;
+
+      // Fail fast (20s) if we can't reconnect, or if we've hit many retries.
+      if (duration > 20000 || sseRetries > SSE_MAX_RETRIES) {
+        console.log('[impeccable] Live server unreachable (persistent failure). Cleaning up UI.');
+        if (evtSource) {
+          evtSource.close();
+          evtSource = null;
+        }
+        handleServerLost();
+        return;
       }
-      // Server is gone. Clean up gracefully.
-      console.log('[impeccable] Live server unreachable. Cleaning up UI.');
-      evtSource.close();
-      evtSource = null;
-      handleServerLost();
+
+      console.log('[impeccable] SSE connection lost. Retry ' + sseRetries + '...');
     };
   }
 

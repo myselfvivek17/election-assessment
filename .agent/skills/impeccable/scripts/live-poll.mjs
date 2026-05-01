@@ -60,8 +60,10 @@ Options:
     const status = args[replyIdx + 2] || 'done';
     const fileIdx = args.indexOf('--file');
     const filePath = fileIdx !== -1 && fileIdx + 1 < args.length ? args[fileIdx + 1] : undefined;
-    // Message is any remaining positional arg that isn't a flag
-    const message = args.find((a, i) => i > replyIdx + 2 && !a.startsWith('--') && i !== fileIdx + 1) || undefined;
+    // Message is any remaining positional args that aren't flags
+    const message = args
+      .filter((a, i) => i > replyIdx + 2 && !a.startsWith('--') && i !== fileIdx + 1)
+      .join(' ') || undefined;
 
     if (!id) {
       console.error('Usage: npx impeccable poll --reply <id> <status> [--file path] [message]');
@@ -104,7 +106,10 @@ Options:
   // ceiling and keep re-polling until we get a real event or the user's
   // total timeout runs out.
   const timeoutArg = args.find(a => a.startsWith('--timeout='));
-  const totalTimeout = timeoutArg ? parseInt(timeoutArg.split('=')[1], 10) : 600000;
+  let totalTimeout = timeoutArg ? parseInt(timeoutArg.split('=')[1], 10) : 600000;
+  if (!Number.isFinite(totalTimeout) || totalTimeout <= 0) {
+    totalTimeout = 600000;
+  }
 
   const deadline = Date.now() + totalTimeout;
   let event;
@@ -116,7 +121,8 @@ Options:
         break;
       }
       const slice = Math.min(remaining, PER_REQUEST_TIMEOUT_MS);
-      const res = await fetch(`${base}/poll?token=${info.token}&timeout=${slice}`);
+      const params = new URLSearchParams({ token: info.token, timeout: slice.toString() });
+      const res = await fetch(`${base}/poll?${params}`);
 
       if (res.status === 401) {
         console.error('Authentication failed. The server token may have changed.');

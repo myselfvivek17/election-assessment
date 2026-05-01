@@ -122,7 +122,11 @@ function handleDiscard(id, lines, targetFile) {
     ...restored,
     ...lines.slice(replaceRange.end + 1),
   ];
-  fs.writeFileSync(targetFile, newLines.join('\n'), 'utf-8');
+  try {
+    fs.writeFileSync(targetFile, newLines.join('\n'), 'utf-8');
+  } catch (err) {
+    return { handled: false, error: 'Failed to write file: ' + err.message };
+  }
   return {};
 }
 
@@ -202,8 +206,11 @@ function handleAccept(id, variantNum, lines, targetFile, paramValues) {
     ...replacement,
     ...lines.slice(replaceRange.end + 1),
   ];
-  fs.writeFileSync(targetFile, newLines.join('\n'), 'utf-8');
-
+  try {
+    fs.writeFileSync(targetFile, newLines.join('\n'), 'utf-8');
+  } catch (err) {
+    return { handled: false, error: 'Failed to write file: ' + err.message, carbonize: false };
+  }
   return { carbonize: needsCarbonize };
 }
 

@@ -424,7 +424,9 @@ export function revertCspMeta(content) {
     const newContentAttr = `content=${contentAttr.quote}${originalValue}${contentAttr.quote}`;
     let newAttrs = tag.attrs.replace(contentAttr.full, newContentAttr);
     // Drop the marker attribute and any single space immediately preceding it.
-    newAttrs = newAttrs.replace(new RegExp(`\\s*${origAttr.full}`), '');
+    // Escape regex metacharacters in origAttr.full since it might contain '+' from base64.
+    const escapedAttr = origAttr.full.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    newAttrs = newAttrs.replace(new RegExp(`\\s*${escapedAttr}`), '');
     const newTag = tag.full.replace(tag.attrs, newAttrs);
 
     result = result.slice(0, tag.start) + newTag + result.slice(tag.end);

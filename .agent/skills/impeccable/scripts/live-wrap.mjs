@@ -51,7 +51,13 @@ The agent should insert variant HTML at insertLine.`);
   }
 
   const id = argVal(args, '--id');
-  const count = parseInt(argVal(args, '--count') || '3');
+  const countRaw = argVal(args, '--count');
+  const count = parseInt(countRaw || '3', 10);
+
+  if (countRaw !== null && !Number.isFinite(count)) {
+    console.error('Invalid --count: must be a number');
+    process.exit(1);
+  }
   const elementId = argVal(args, '--element-id');
   const classes = argVal(args, '--classes');
   const tag = argVal(args, '--tag');

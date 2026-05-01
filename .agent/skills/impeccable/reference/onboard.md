@@ -157,7 +157,7 @@ Projects help you organize your work and collaborate with your team.
 **In-product help**:
 - Contextual help links throughout interface
 - Keyboard shortcut reference
-- Search-able help center
+- Searchable help center
 - Video tutorials for complex workflows
 
 **Help patterns**:

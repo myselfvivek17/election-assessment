@@ -19,7 +19,8 @@
  */
 
 import { existsSync, readFileSync, writeFileSync, rmSync, readdirSync, statSync, lstatSync, unlinkSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, resolve, parse } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // Skills that were renamed, merged, or folded in v2.0, v2.1, and v3.0.
 const DEPRECATED_NAMES = [
@@ -74,7 +75,7 @@ const SKILL_FINGERPRINTS = {
  */
 export function findProjectRoot(startDir = process.cwd()) {
   let dir = resolve(startDir);
-  const { root } = { root: '/' };
+  const { root } = parse(dir);
   while (dir !== root) {
     if (
       existsSync(join(dir, 'package.json')) ||
@@ -267,7 +268,7 @@ export function cleanup(projectRoot) {
 }
 
 // CLI entry point
-if (process.argv[1] && resolve(process.argv[1]) === resolve(new URL(import.meta.url).pathname)) {
+if (process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url))) {
   const result = cleanup();
   if (result.deletedPaths.length === 0 && result.removedLockEntries.length === 0) {
     console.log('No deprecated Impeccable skills found. Nothing to clean up.');

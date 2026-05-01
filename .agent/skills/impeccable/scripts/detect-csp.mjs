@@ -68,13 +68,13 @@ const NUXT_SECURITY_SIGNALS = [
 // append-string signals: CSP written as a literal value string
 const INLINE_HEADER_SIGNALS = [
   /["']Content-Security-Policy["']/i,
-  /\bscript-src\b/,
-  /\bconnect-src\b/,
+  /\bscript-src\b/i,
+  /\bconnect-src\b/i,
 ];
 const NUXT_ROUTE_RULES_SIGNALS = [
   /\brouteRules\b/,
   /Content-Security-Policy/i,
-  /\bscript-src\b/,
+  /\bscript-src\b/i,
 ];
 
 const MIDDLEWARE_HINT = /headers\.set\(\s*["']Content-Security-Policy["']/i;
