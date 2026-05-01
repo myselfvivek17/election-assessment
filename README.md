@@ -1,4 +1,6 @@
 # Election Sathi 🇮🇳
+**Live Demo:** [sapient-spark-436612-n4.web.app](https://sapient-spark-436612-n4.web.app)
+
 **Your interactive, voice-first, multilingual AI assistant for voter education in India.**
 
 ## Chosen Vertical
@@ -57,10 +59,10 @@ Election Sathi follows the **Impeccable** design guidelines strictly:
     *   Implemented `motion-safe` animations to respect user OS preferences.
 
 ## Google Services Used
-| Service | Purpose | File Path |
+| Service | Purpose | Live Link / Path |
 | :--- | :--- | :--- |
 | **Gemini 3 Flash** | Core Chat Logic & Translation | `app/api/chat/route.ts` |
-| **Firebase Hosting** | PWA Deployment | `firebase.json` |
+| **Firebase Hosting** | PWA Deployment | [Live App](https://sapient-spark-436612-n4.web.app) |
 | **Gemini API** | KYC Data Summarization | `lib/ai/gemini.ts` |
 | **Google Search** | Grounding AI answers in ECI data | `app/api/chat/route.ts` |
 
