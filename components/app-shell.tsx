@@ -3,7 +3,8 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/lib/context/lang-context";
-import { Home, ClipboardList, MapPin, Users, CalendarCheck, Lightbulb } from "lucide-react";
+import { useAuth } from "@/lib/context/auth-context";
+import { Home, ClipboardList, MapPin, Users, CalendarCheck, Lightbulb, LogIn, LogOut, User as UserIcon } from "lucide-react";
 
 const navItems = [
   { href: "/", icon: Home, labelKey: "welcome" as const, emoji: "🏠" },
@@ -17,6 +18,7 @@ const navItems = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { dict } = useLang();
+  const { user, signInWithGoogle, logout } = useAuth();
 
   return (
     <div className="flex min-h-[100dvh] bg-muted/30">
@@ -57,15 +59,68 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             );
           })}
         </nav>
-        <div className="p-4 border-t">
-          <p className="text-xs text-muted-foreground text-center">
-            Powered by Google Gemini
+        <div className="p-4 border-t space-y-4">
+          {user ? (
+            <div className="flex items-center gap-3 px-2">
+              <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-primary/20">
+                {user.photoURL ? (
+                  <img src={user.photoURL} alt={user.displayName || "User"} className="h-full w-full object-cover" />
+                ) : (
+                  <UserIcon className="h-4 w-4 text-primary" />
+                )}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold truncate">{user.displayName || "User"}</p>
+                <button 
+                  onClick={() => logout()}
+                  className="text-[10px] text-muted-foreground hover:text-destructive flex items-center gap-1 transition-colors"
+                >
+                  <LogOut className="h-3 w-3" /> Sign Out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              onClick={() => signInWithGoogle()}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-all shadow-sm active:scale-[0.98]"
+            >
+              <LogIn className="h-4 w-4" /> Sign In
+            </button>
+          )}
+          <p className="text-[10px] text-muted-foreground text-center pt-2 border-t border-muted/50">
+            Election Sathi • Powered by Gemini
           </p>
         </div>
       </aside>
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col min-h-[100dvh] md:min-h-0">
+        {/* Mobile header */}
+        <header className="md:hidden flex items-center justify-between px-4 h-14 bg-background/80 backdrop-blur-md border-b sticky top-0 z-40">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">🗳️</span>
+            <span className="font-bold text-sm tracking-tight">Election Sathi</span>
+          </div>
+          {user ? (
+            <button 
+              onClick={() => logout()}
+              className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden border border-primary/20"
+            >
+              {user.photoURL ? (
+                <img src={user.photoURL} alt="Profile" className="h-full w-full object-cover" />
+              ) : (
+                <UserIcon className="h-4 w-4 text-primary" />
+              )}
+            </button>
+          ) : (
+            <button 
+              onClick={() => signInWithGoogle()}
+              className="text-xs font-semibold text-primary px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors flex items-center gap-1.5"
+            >
+              <LogIn className="h-3.5 w-3.5" /> Sign In
+            </button>
+          )}
+        </header>
         {children}
       </div>
 

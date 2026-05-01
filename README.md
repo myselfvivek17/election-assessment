@@ -63,6 +63,8 @@ Election Sathi follows the **Impeccable** design guidelines strictly:
 | :--- | :--- | :--- |
 | **Gemini 3 Flash** | Core Chat Logic & Translation | `app/api/chat/route.ts` |
 | **Firebase Hosting** | PWA Deployment | [Live App](https://sapient-spark-436612-n4.web.app) |
+| **Firebase Auth** | Google Sign-In for Voters | `lib/context/auth-context.tsx` |
+| **Firestore** | Saving User Booths & Preferences | `lib/firebase/firestore.ts` |
 | **Gemini API** | KYC Data Summarization | `lib/ai/gemini.ts` |
 | **Google Search** | Grounding AI answers in ECI data | `app/api/chat/route.ts` |
 

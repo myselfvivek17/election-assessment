@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Noto_Sans } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
 import { LangProvider } from "@/lib/context/lang-context";
+import { AuthProvider } from "@/lib/context/auth-context";
 import { AnalyticsInit } from "@/components/analytics-init";
 import "./globals.css";
 
@@ -32,9 +33,11 @@ export default function RootLayout({
     >
       <body className={`${notoSans.variable} font-sans antialiased bg-muted/30`}>
         <AnalyticsInit />
-        <LangProvider>
-          <AppShell>{children}</AppShell>
-        </LangProvider>
+        <AuthProvider>
+          <LangProvider>
+            <AppShell>{children}</AppShell>
+          </LangProvider>
+        </AuthProvider>
       </body>
     </html>
   );
