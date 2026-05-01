@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans } from "next/font/google";
 import { AppShell } from "@/components/app-shell";
+import { LangProvider } from "@/lib/context/lang-context";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -10,8 +11,8 @@ const notoSans = Noto_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Election Sathi",
-  description: "An interactive, voice-first, multilingual AI assistant for voter education in India.",
+  title: "Election Sathi - Your AI Voting Assistant",
+  description: "Get verified election information and register to vote with AI assistance.",
   manifest: "/manifest.json",
 };
 
@@ -27,10 +28,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${notoSans.variable} antialiased`}
     >
-      <body>
-        <AppShell>{children}</AppShell>
+      <body className={`${notoSans.variable} font-sans antialiased bg-muted/30`}>
+        <LangProvider>
+          <AppShell>{children}</AppShell>
+        </LangProvider>
       </body>
     </html>
   );

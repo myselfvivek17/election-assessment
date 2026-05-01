@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useLang } from "@/lib/hooks/use-lang";
+import { useLang } from "@/lib/context/lang-context";
 import { Home, ClipboardList, MapPin, Users, CalendarCheck, Lightbulb } from "lucide-react";
 
 const navItems = [
@@ -38,8 +38,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             const isActive = pathname === item.href;
             const Icon = item.icon;
             const label = item.labelKey === "welcome"
-              ? (pathname === "/" ? "Home" : "Home")
+              ? dict.home
               : (dict as Record<string, string>)[item.labelKey] || item.labelKey;
+            
             return (
               <Link
                 key={item.href}
@@ -51,7 +52,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 }`}
               >
                 <Icon className="h-5 w-5 shrink-0" />
-                <span>{item.labelKey === "welcome" ? "Home" : label}</span>
+                <span>{label}</span>
               </Link>
             );
           })}
@@ -69,20 +70,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t flex justify-around items-center h-16 z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-        {navItems.slice(0, 5).map((item) => {
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t flex justify-around items-center h-16 z-50 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] px-2">
+        {navItems.map((item) => {
           const isActive = pathname === item.href;
           const Icon = item.icon;
+          const label = item.labelKey === "welcome"
+            ? dict.home
+            : (dict as Record<string, string>)[item.labelKey] || item.labelKey;
+
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center justify-center gap-0.5 px-2 py-1 rounded-lg transition-colors ${
+              className={`flex flex-col items-center justify-center gap-0.5 px-1 py-1 rounded-lg transition-colors flex-1 ${
                 isActive ? 'text-primary' : 'text-muted-foreground'
               }`}
             >
               <Icon className="h-5 w-5" />
-              <span className="text-[10px] font-medium">{item.emoji}</span>
+              <span className="text-[9px] font-medium text-center line-clamp-1">{label}</span>
             </Link>
           );
         })}

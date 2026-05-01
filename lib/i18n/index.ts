@@ -44,6 +44,7 @@ export type Dictionary = {
   mythsTitle: string;
   myth: string;
   fact: string;
+  home: string;
 };
 
 export const languages: Record<Language, string> = {
@@ -95,6 +96,7 @@ export const dictionaries: Record<Language, Partial<Dictionary>> = {
     mythsTitle: 'Myth Buster',
     myth: 'Myth',
     fact: 'Fact',
+    home: 'Home',
   },
   hi: {
     welcome: 'इलेक्शन साथी में आपका स्वागत है',
@@ -135,6 +137,7 @@ export const dictionaries: Record<Language, Partial<Dictionary>> = {
     mythsTitle: 'मिथक तोड़ो',
     myth: 'भ्रम',
     fact: 'सच्चाई',
+    home: 'होम',
   },
   // Stubs
   te: {}, ta: {}, bn: {}, mr: {},

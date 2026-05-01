@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { getDictionary } from "@/lib/i18n";
-import { useLang } from "@/lib/hooks/use-lang";
+import { useLang } from "@/lib/context/lang-context";
 import { getSpeechService } from "@/lib/channels/speech";
 import { generateChatResponse } from "@/lib/ai/gemini";
 import Link from "next/link";
